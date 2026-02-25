@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="students.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="1252"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><table title="students" custom_title="0" dock_id="1" table="4,8:mainstudents"/><dock_state state="000000ff00000000fd00000001000000020000000000000000fc0100000001fb000000160064006f0063006b00420072006f00770073006500310100000000ffffffff0000011300ffffff000000000000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="SQL 1*">-- =========================
+-- 1) สร้างตาราง students
+-- =========================
+CREATE TABLE IF NOT EXISTS students (
+    student_id TEXT PRIMARY KEY,   -- รหัสนักศึกษา
+    first_name TEXT NOT NULL,      -- ชื่อ
+    last_name TEXT NOT NULL,       -- นามสกุล
+    major TEXT NOT NULL,           -- สาขาวิชา
+    faculty TEXT NOT NULL          -- คณะ
+);
+
+-- =========================
+-- 2) (ทางเลือก) เพิ่มดัชนีเพื่อค้นหาเร็วขึ้น
+-- =========================
+CREATE INDEX IF NOT EXISTS idx_students_name
+ON students(first_name, last_name);
+
+CREATE INDEX IF NOT EXISTS idx_students_major
+ON students(major);
+
+CREATE INDEX IF NOT EXISTS idx_students_faculty
+ON students(faculty);
+
+-- =========================
+-- 3) ตัวอย่างข้อมูลเริ่มต้น (ทางเลือก)
+-- =========================
+INSERT INTO students (student_id, first_name, last_name, major, faculty) VALUES
+('66010001', 'สมชาย', 'ใจดี', 'วิทยาการคอมพิวเตอร์', 'วิทยาศาสตร์และเทคโนโลยี'),
+('66010002', 'สุดา', 'พัฒนา', 'เทคโนโลยีสารสนเทศ', 'วิทยาศาสตร์และเทคโนโลยี'),
+('66010003', 'กิตติ', 'วงศ์ไทย', 'วิศวกรรมซอฟต์แวร์', 'วิทยาศาสตร์และเทคโนโลยี');
+
+-- =========================
+-- 4) ตัวอย่างคำสั่ง CRUD SQL
+-- =========================
+
+-- C: Create (เพิ่มข้อมูล)
+-- INSERT INTO students (student_id, first_name, last_name, major, faculty)
+-- VALUES ('66010004', 'อรทัย', 'แสงทอง', 'วิทยาการข้อมูล', 'วิทยาศาสตร์และเทคโนโลยี');
+
+-- R: Read (อ่านข้อมูลทั้งหมด)
+-- SELECT * FROM students ORDER BY student_id;
+
+-- R: Read (ค้นหาตามรหัส)
+-- SELECT * FROM students WHERE student_id = '66010001';
+
+-- U: Update (แก้ไขข้อมูล)
+-- UPDATE students
+-- SET first_name = 'สมชายแก้ไข', major = 'วิทยาการข้อมูล'
+-- WHERE student_id = '66010001';
+
+-- D: Delete (ลบข้อมูล)
+-- DELETE FROM students
+-- WHERE student_id = '66010003';</sql><current_tab id="0"/></tab_sql></sqlb_project>
